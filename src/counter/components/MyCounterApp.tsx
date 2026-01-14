@@ -1,4 +1,4 @@
-import { useCounter } from "./hooks/useCounter";
+import { useCounter } from "../hooks/useCounter";
 
 export const MyCounterApp = () => {
     const { counter, handleAdd, handleSubtract, handleReset } = useCounter(0);
@@ -11,6 +11,11 @@ export const MyCounterApp = () => {
 
             <div style={{ display: 'flex', gap: '10px' }}>
                 <button onClick={handleAdd}>+1</button>
+                {/* <button onClick={() => {
+                    handleAdd();
+                    handleAdd();
+                    handleAdd();
+                }}>+1</button> */}
                 <button onClick={handleSubtract}>-1</button>
                 <button onClick={handleReset}>Reset</button>
             </div>
