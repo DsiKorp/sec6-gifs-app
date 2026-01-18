@@ -12,8 +12,9 @@ export const SearchBar = ({ placeholder = "Buscar...", textButton = "Buscar", on
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
+            sendInputGa4();
             onQuery(query);
-        }, 700);
+        }, 1000);
 
 
         return () => {
@@ -22,6 +23,7 @@ export const SearchBar = ({ placeholder = "Buscar...", textButton = "Buscar", on
     }, [query, onQuery]);  // dependencias
 
     const handleSearch = () => {
+        sendInputGa4();
         // emite el query al padre
         onQuery(query);
         setQuery('');
@@ -30,6 +32,21 @@ export const SearchBar = ({ placeholder = "Buscar...", textButton = "Buscar", on
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             handleSearch();
+        }
+    };
+
+    const sendInputGa4 = () => {
+        setQuery(query.trim().toLowerCase());
+
+        if (query.trim().toLowerCase().length > 0) {
+            console.log('entro al if')
+            if (typeof (window as any).gtag === 'function') {
+                (window as any).gtag('event', 'search', { search_term: query });
+            } else if (Array.isArray((window as any).dataLayer)) {
+                (window as any).dataLayer.push({ event: 'search', search_term: query });
+            } else {
+                console.warn('GA4 no disponible: gtag/dataLayer no encontrada');
+            }
         }
     };
 
