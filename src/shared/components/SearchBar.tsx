@@ -15,7 +15,6 @@ export const SearchBar = ({ placeholder = "Buscar...", textButton = "Buscar", on
     // el return se dispara cuando el componente se va a desmontar o antes de volver a ejecutar la función callback
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            sendInputGa4();
             onQuery(query);
         }, 1000);
 
@@ -28,7 +27,6 @@ export const SearchBar = ({ placeholder = "Buscar...", textButton = "Buscar", on
     // que si cambian tienen que volver a ejecutar el efecto
 
     const handleSearch = () => {
-        sendInputGa4();
         // emite el query al padre
         onQuery(query);
         setQuery('');
@@ -37,20 +35,6 @@ export const SearchBar = ({ placeholder = "Buscar...", textButton = "Buscar", on
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             handleSearch();
-        }
-    };
-
-    const sendInputGa4 = () => {
-        setQuery(query.trim().toLowerCase());
-
-        if (query.length > 0) {
-            if (typeof (window as any).gtag === 'function') {
-                (window as any).gtag('event', 'search', { search_term: query });
-            } else if (Array.isArray((window as any).dataLayer)) {
-                (window as any).dataLayer.push({ event: 'search', search_term: query });
-            } else {
-                console.warn('GA4 no disponible: gtag/dataLayer no encontrada');
-            }
         }
     };
 

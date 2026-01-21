@@ -12,6 +12,7 @@ export const useGifs = () => {
 
     const handleTermClicked = async (term: string) => {
         console.log(`${term}`);
+        sendInputGa4(term);
 
         if (gifsCache.current[term]) {
             setGifs(gifsCache.current[term]);
@@ -43,7 +44,23 @@ export const useGifs = () => {
 
         gifsCache.current[query] = gifs;
         //console.log(gifsCache);
+        sendInputGa4(query);
 
+
+    };
+
+    const sendInputGa4 = (term: string) => {
+
+        if (term.length > 0) {
+            console.log('entro al if')
+            if (typeof (window as any).gtag === 'function') {
+                (window as any).gtag('event', 'search', { search_term: term });
+            } else if (Array.isArray((window as any).dataLayer)) {
+                (window as any).dataLayer.push({ event: 'search', search_term: term });
+            } else {
+                console.warn('GA4 no disponible: gtag/dataLayer no encontrada');
+            }
+        }
     };
 
 
