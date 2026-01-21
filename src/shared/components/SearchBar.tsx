@@ -11,6 +11,8 @@ export const SearchBar = ({ placeholder = "Buscar...", textButton = "Buscar", on
 
     const [query, setQuery] = useState('');
 
+    // un efecto se dispara cada vez que el componente se renderiza
+    // el return se dispara cuando el componente se va a desmontar o antes de volver a ejecutar la función callback
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             sendInputGa4();
