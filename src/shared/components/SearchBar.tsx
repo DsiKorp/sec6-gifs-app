@@ -1,5 +1,6 @@
 import { useEffect, useState, type KeyboardEvent } from "react";
 
+// es void porque es unicamente para mandarlo llamar del padre
 interface Props {
     placeholder?: string;
     textButton?: string;
@@ -20,7 +21,9 @@ export const SearchBar = ({ placeholder = "Buscar...", textButton = "Buscar", on
         return () => {
             clearTimeout(timeoutId);
         };
-    }, [query, onQuery]);  // dependencias
+    }, [query, onQuery]);
+    // [query, onQuery] dependencias que el efecto tiene que observar, es decir cuales son las dependencias 
+    // que si cambian tienen que volver a ejecutar el efecto
 
     const handleSearch = () => {
         sendInputGa4();
@@ -38,8 +41,7 @@ export const SearchBar = ({ placeholder = "Buscar...", textButton = "Buscar", on
     const sendInputGa4 = () => {
         setQuery(query.trim().toLowerCase());
 
-        if (query.trim().toLowerCase().length > 0) {
-            console.log('entro al if')
+        if (query.length > 0) {
             if (typeof (window as any).gtag === 'function') {
                 (window as any).gtag('event', 'search', { search_term: query });
             } else if (Array.isArray((window as any).dataLayer)) {
@@ -53,6 +55,7 @@ export const SearchBar = ({ placeholder = "Buscar...", textButton = "Buscar", on
     return (
         <div className="search-container">
             {/* <h1>{query}</h1> */}
+            {/* query es un input controlado por react*/}
             <input
                 type="text"
                 placeholder={placeholder}

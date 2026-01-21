@@ -20,6 +20,9 @@ export const GifsApp = () => {
             />
             {/* busquedas previas */}
             <PreviousSearches searches={previousTerms}
+                // cuando la cantidad de argumentos es igual y el tipo es el mismo se puede usar la forma corta, 
+                // es decir enviar como referencia la función directamente
+                //onLabelClicked={(term: string) => handleTermClicked(term)}
                 onLabelClicked={handleTermClicked}
             />
             {/* Gifs */}

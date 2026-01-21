@@ -1,5 +1,6 @@
 import type { FC } from "react";
 
+// es void porque es unicamente para mandarlo llamar del padre
 interface Props {
     searches: string[];
     onLabelClicked: (term: string) => void;
