@@ -66,7 +66,11 @@ describe("getGifsByQuery", () => {
 
     test("should handle error when API returns 400", async () => {
         const consoleErrorSpy = vi.spyOn(console, 'error')
-            .mockImplementation(() => { });
+            .mockImplementation(() => {
+                console.log('Error');
+                console.log('De');
+                console.log('La API');
+            });
 
         // 400, []
         mock.onGet("/search").reply(400, {
