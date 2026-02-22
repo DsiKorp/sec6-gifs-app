@@ -19,30 +19,32 @@ export const useGifs = () => {
             return;
         }
 
-        const gifs = await getGifsByQuery(term);
-        setGifs(gifs);
-        gifsCache.current[term] = gifs;
+        const gifsHttp = await getGifsByQuery(term);
+        setGifs(gifsHttp);
+        gifsCache.current[term] = gifsHttp;
     };
 
     const handleSearch = async (query: string = '') => {
-        console.log({ query });
-        query = query.trim().toLocaleLowerCase();
+        // requerimiento https://gist.github.com/Klerith/68c0df33c9010ae6f5dcd9a7f641f78d
+        query = query.trim().toLowerCase();
 
         if (query.length === 0) {
             return;
         }
+
+        console.log({ query });
 
         if (previousTerms.includes(query)) {
             return;
         }
 
         setPreviousTerms([query, ...previousTerms].slice(0, 8));
-        const gifs = await getGifsByQuery(query);
+        const gifsHttp = await getGifsByQuery(query);
 
         //console.log({ gifs });
-        setGifs(gifs);
+        setGifs(gifsHttp);
 
-        gifsCache.current[query] = gifs;
+        gifsCache.current[query] = gifsHttp;
         //console.log(gifsCache);
         sendInputGa4(query);
 

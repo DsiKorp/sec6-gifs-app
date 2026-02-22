@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
 import { SearchBar } from "./SearchBar";
 
@@ -14,6 +14,7 @@ describe("SearchBar", () => {
     });
 
     test("should call onQuery with the correct value after 1000ms", async () => {
+        vi.useFakeTimers();
         const searchTerm = "Astro Bot test query";
         const onQueryMock = vi.fn();
         render(<SearchBar onQuery={onQueryMock} />);
@@ -21,13 +22,12 @@ describe("SearchBar", () => {
         const input = screen.getByRole("textbox") as HTMLInputElement;
         fireEvent.change(input, { target: { value: searchTerm } });
 
-        screen.debug();
+        await vi.advanceTimersByTimeAsync(1000);
 
-        //await new Promise((resolve) => setTimeout(resolve, 1101)); // wait for more than 1000ms
-        await waitFor(() => {
-            expect(onQueryMock).toHaveBeenCalled();
-            expect(onQueryMock).toHaveBeenCalledWith(searchTerm);
-        });
+        expect(onQueryMock).toHaveBeenCalled();
+        expect(onQueryMock).toHaveBeenCalledWith(searchTerm);
+
+        vi.useRealTimers();
     });
 
     // clase 109
