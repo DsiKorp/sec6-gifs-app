@@ -8,6 +8,9 @@ export const useGifs = () => {
     const [gifs, setGifs] = useState<Gif[]>([]);
     const [previousTerms, setPreviousTerms] = useState<string[]>([]);
 
+    // useRef crea un espacio en memoria y mantiene el valor entre renderizados
+    // Record En TypeScript, Record<K, T> es un "Utility Type" (tipo de utilidad) 
+    // que sirve para definir de forma rápida y clara la estructura de un objeto.
     const gifsCache = useRef<Record<string, Gif[]>>({});
 
     const handleTermClicked = async (term: string) => {
