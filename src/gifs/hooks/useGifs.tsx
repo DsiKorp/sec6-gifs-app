@@ -35,6 +35,7 @@ export const useGifs = () => {
         console.log({ query });
 
         if (previousTerms.includes(query)) {
+            setGifs(gifsCache.current[query]);
             return;
         }
 
@@ -45,6 +46,7 @@ export const useGifs = () => {
         setGifs(gifsHttp);
 
         gifsCache.current[query] = gifsHttp;
+        console.log({ gifsCache });
         //console.log(gifsCache);
         sendInputGa4(query);
 

@@ -12,7 +12,8 @@ export const SearchBar = ({ placeholder = "Buscar...", textButton = "Buscar", on
     const [query, setQuery] = useState('');
 
     // un efecto se dispara cada vez que el componente se renderiza
-    // el return se dispara cuando el componente se va a desmontar o antes de volver a ejecutar la función callback
+    // el return se dispara cuando el componente se va a desmontar
+    // o antes de volver a ejecutar la función callback
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             onQuery(query);
@@ -23,7 +24,8 @@ export const SearchBar = ({ placeholder = "Buscar...", textButton = "Buscar", on
             clearTimeout(timeoutId);
         };
     }, [query, onQuery]);
-    // [query, onQuery] dependencias que el efecto tiene que observar, es decir cuales son las dependencias 
+    // [query, onQuery] dependencias que el efecto tiene que observar, 
+    // es decir cuales son las dependencias 
     // que si cambian tienen que volver a ejecutar el efecto
 
     const handleSearch = () => {
